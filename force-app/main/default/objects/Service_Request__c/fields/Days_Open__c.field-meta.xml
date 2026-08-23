@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_Open__c</fullName>
+    <description>Calculates the number of days a Service Request has been open or the time taken to resolve it.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+    ISBLANK(Request_Date__c),
+    0,
+    IF(
+        NOT(ISBLANK(Resolution_Date__c)),
+        Resolution_Date__c - Request_Date__c,
+        NOW() - Request_Date__c
+    )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Shows the number of days since the request was created, or the total days taken to resolve it.</inlineHelpText>
+    <label>Days Open</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
