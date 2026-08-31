@@ -1,0 +1,47 @@
+<template>
+    <lightning-card title="HelpDesk Dashboard" icon-name="standard:service_request">
+        <div class="slds-p-around_medium">
+
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                IT Service Management Overview
+            </h2>
+
+            <c-request-summary
+                open-count={openCount}
+                critical-count={criticalCount}
+                resolved-count={resolvedCount}
+                sla-risk={slaRisk}>
+            </c-request-summary>
+
+            <div class="slds-m-top_large">
+                <c-request-filter
+                    onsearchchange={handleSearchChange}
+                    onstatuschange={handleStatusChange}
+                    onpriaoritychange={handlePriorityChange}
+                    oncategorychange={handleCategoryChange}
+                    onrefresh={handleRefresh}>
+                </c-request-filter>
+            </div>
+
+            <div class="slds-m-top_large">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading service requests"></lightning-spinner>
+                </template>
+
+                <template if:true={error}>
+                    <div class="slds-text-color_error slds-p-around_medium">
+                        Unable to load Service Requests.
+                    </div>
+                </template>
+
+                <template if:false={isLoading}>
+                    <c-request-list
+                        requests={filteredRequests}
+                        onrowselect={handleRowSelect}>
+                    </c-request-list>
+                </template>
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

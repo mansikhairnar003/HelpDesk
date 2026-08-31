@@ -1,0 +1,40 @@
+<template>
+    <div class="filter-container">
+
+        <lightning-input
+            type="search"
+            label="Search Service Requests"
+            placeholder="Search by request name or subject..."
+            value={searchTerm}
+            onchange={handleSearch}>
+        </lightning-input>
+
+        <lightning-combobox
+            label="Category"
+            value={selectedCategory}
+            options={categoryOptions}
+            onchange={handleCategoryChange}>
+        </lightning-combobox>
+
+        <lightning-combobox
+            label="Priority"
+            value={selectedPriority}
+            options={priorityOptions}
+            onchange={handlePriorityChange}>
+        </lightning-combobox>
+
+        <lightning-combobox
+            label="Status"
+            value={selectedStatus}
+            options={statusOptions}
+            onchange={handleStatusChange}>
+        </lightning-combobox>
+
+        <lightning-button
+            label="Refresh"
+            icon-name="utility:refresh"
+            onclick={handleRefresh}>
+        </lightning-button>
+
+    </div>
+</template>

@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Service Requests" icon-name="standard:service_request">
+        <div class="slds-p-around_medium">
+            <template if:true={hasData}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={requests}
+                    columns={columns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </template>
+
+            <template if:false={hasData}>
+                <div class="empty-message">
+                    No Service Requests found.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
