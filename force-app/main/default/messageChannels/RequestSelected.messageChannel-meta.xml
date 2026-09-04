@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>RequestSelected</masterLabel>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <fieldName>recordId</fieldName>
+        <description>The Id of the selected Service Request</description>
+    </lightningMessageFields>
+    <description>Fired when a Service Request row is selected in the Request List</description>
+</LightningMessageChannel>

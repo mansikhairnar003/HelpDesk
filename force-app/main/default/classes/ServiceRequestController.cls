@@ -1,7 +1,7 @@
 public with sharing class ServiceRequestController {
 
-    @AuraEnabled(cacheable=true)
-    public static List<Service_Request__c> getOpenRequests() {
+        @AuraEnabled(cacheable=true)
+    public static List<Service_Request__c> getAllRequests() {
         try {
             return [
                 SELECT Id,
@@ -13,12 +13,11 @@ public with sharing class ServiceRequestController {
                        Request_Date__c,
                        SLA_Deadline__c
                 FROM Service_Request__c
-                WHERE Status__c != 'Resolved'
                 ORDER BY Request_Date__c DESC
             ];
         } catch (Exception e) {
             throw new AuraHandledException(
-                'Unable to load open service requests: ' + e.getMessage()
+                'Unable to load service requests: ' + e.getMessage()
             );
         }
     }
@@ -67,5 +66,25 @@ public with sharing class ServiceRequestController {
         } catch (Exception e) {
             throw new AuraHandledException('Unable to load priority counts: ' + e.getMessage());
         }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Service_Request__c getRequestDetails(Id requestId) {
+        return [
+            SELECT Id, Name, Subject__c, Employee__r.Name, Category__c,
+                   Priority__c, Status__c, SLA_Deadline__c, Description__c,
+                   Resolution_Date__c, Resolution_Notes__c
+            FROM Service_Request__c
+            WHERE Id = :requestId
+        ];
+    }
+    @AuraEnabled(cacheable=true)
+    public static Integer getSLARiskCount() {
+        return [
+            SELECT COUNT()
+            FROM Service_Request__c
+            WHERE Status__c != 'Resolved'
+            AND (Priority__c = 'Critical' OR Priority__c = 'High')
+        ];
     }
 }

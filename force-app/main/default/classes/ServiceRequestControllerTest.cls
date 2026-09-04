@@ -29,23 +29,25 @@ private class ServiceRequestControllerTest {
         );
 
         insert new List<Service_Request__c>{request1, request2};
+        request1.Status__c = 'New';
+        request2.Status__c = 'Resolved';
+        request2.Resolution_Notes__c = 'Resolved during test setup.';
+        update new List<Service_Request__c>{request1, request2};
     }
 
     @IsTest
-    static void testGetOpenRequests() {
+    static void testGetAllRequests() {
 
     Test.startTest();
 
     List<Service_Request__c> requests =
-        ServiceRequestController.getOpenRequests();
+        ServiceRequestController.getAllRequests();
 
     Test.stopTest();
 
     System.assertNotEquals(null, requests);
+    System.assertEquals(2, requests.size(), 'Should return all requests including Resolved.');
 
-    for (Service_Request__c request : requests) {
-        System.assertNotEquals('Resolved', request.Status__c);
-    }
 }
 
     @IsTest
@@ -85,5 +87,33 @@ private class ServiceRequestControllerTest {
         System.assertEquals(1, counts.get('Critical'));
         System.assertEquals(0, counts.get('Medium'));
         System.assertEquals(0, counts.get('Low'));
+    }
+
+    @IsTest
+    static void testGetRequestDetails() {
+
+        Service_Request__c testRequest = [
+            SELECT Id FROM Service_Request__c WHERE Subject__c = 'Test New Request' LIMIT 1
+        ];
+
+        Test.startTest();
+
+        Service_Request__c result = ServiceRequestController.getRequestDetails(testRequest.Id);
+
+        Test.stopTest();
+
+        System.assertNotEquals(null, result, 'Request details should not be null.');
+        System.assertEquals('Test New Request', result.Subject__c, 'Subject should match the test record.');
+    }
+    @IsTest
+    static void testGetSLARiskCount() {
+
+        Test.startTest();
+
+        Integer count = ServiceRequestController.getSLARiskCount();
+
+        Test.stopTest();
+
+        System.assertEquals(1, count, 'Should count only non-resolved Critical/High priority requests.');
     }
 }

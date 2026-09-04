@@ -1,5 +1,10 @@
-.empty-message {
+/* .empty-message {
     padding: 2rem;
     text-align: center;
     color: #706e6b;
+} */
+ .empty-message {
+    text-align: center;
+    color: #706e6b;
+    padding: 2rem 0;
 }

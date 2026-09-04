@@ -1,0 +1,18 @@
+.detail-label {
+    font-size: 0.75rem;
+    color: #706e6b;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.detail-value {
+    font-size: 0.95rem;
+    color: #16325c;
+}
+
+.empty-message {
+    text-align: center;
+    color: #706e6b;
+    padding: 2rem 0;
+}

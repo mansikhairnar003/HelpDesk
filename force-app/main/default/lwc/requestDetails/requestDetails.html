@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="Request Details" icon-name="standard:service_request">
+        <div class="slds-p-around_medium">
+
+            <template if:false={hasSelection}>
+                <div class="empty-message">
+                    Select a Service Request from the list to view details.
+                </div>
+            </template>
+
+            <template if:true={hasSelection}>
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading details"></lightning-spinner>
+                </template>
+
+                <template if:true={requestDetails}>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                            <p class="detail-label">Subject</p>
+                            <p class="detail-value">{requestDetails.Subject__c}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                            <p class="detail-label">Employee</p>
+                            <p class="detail-value">{employeeName}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                            <p class="detail-label">Category</p>
+                            <p class="detail-value">{requestDetails.Category__c}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                            <p class="detail-label">Priority</p>
+                            <p class="detail-value">{requestDetails.Priority__c}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                            <p class="detail-label">Status</p>
+                            <p class="detail-value">{requestDetails.Status__c}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                            <p class="detail-label">SLA Deadline</p>
+                            <p class="detail-value">{requestDetails.SLA_Deadline__c}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                            <p class="detail-label">Description</p>
+                            <p class="detail-value">{requestDetails.Description__c}</p>
+                        </div>
+                        <template if:true={isResolved}>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                                <p class="detail-label">Resolution Notes</p>
+                                <p class="detail-value">{requestDetails.Resolution_Notes__c}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <p class="detail-label">Resolution Date</p>
+                                <p class="detail-value">{requestDetails.Resolution_Date__c}</p>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

@@ -35,10 +35,14 @@
                 </template>
 
                 <template if:false={isLoading}>
-                    <c-request-list
-                        requests={filteredRequests}
-                        onrowselect={handleRowSelect}>
-                    </c-request-list>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
+                            <c-request-list requests={filteredRequests}></c-request-list>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                            <c-request-details></c-request-details>
+                        </div>
+                    </div>
                 </template>
             </div>
 
