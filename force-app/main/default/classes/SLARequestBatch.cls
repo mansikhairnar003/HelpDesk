@@ -6,10 +6,9 @@ public with sharing class SLARequestBatch
     ) {
         return Database.getQueryLocator([
             SELECT Id, Name, Priority__c, Status__c,
-                   SLA_Deadline__c
+                   SLA_Deadline__c, SLA_Breached__c
             FROM Service_Request__c
             WHERE Status__c NOT IN ('Resolved', 'Closed')
-            AND SLA_Deadline__c != null
         ]);
     }
 
@@ -17,17 +16,21 @@ public with sharing class SLARequestBatch
         Database.BatchableContext context,
         List<Service_Request__c> requests
     ) {
+        List<Service_Request__c> toUpdate = new List<Service_Request__c>();
+
         for (Service_Request__c request : requests) {
 
-            if (request.SLA_Deadline__c <= System.now()) {
+            Boolean shouldBeBreached = request.SLA_Deadline__c != null
+                && request.SLA_Deadline__c <= System.now();
 
-                System.debug(
-                    'SLA BREACHED → ' +
-                    request.Name +
-                    ' | Priority=' + request.Priority__c +
-                    ' | Deadline=' + request.SLA_Deadline__c
-                );
+            if (request.SLA_Breached__c != shouldBeBreached) {
+                request.SLA_Breached__c = shouldBeBreached;
+                toUpdate.add(request);
             }
+        }
+
+        if (!toUpdate.isEmpty()) {
+            update toUpdate;
         }
     }
 

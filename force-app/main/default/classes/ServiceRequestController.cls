@@ -83,8 +83,7 @@ public with sharing class ServiceRequestController {
         return [
             SELECT COUNT()
             FROM Service_Request__c
-            WHERE Status__c != 'Resolved'
-            AND (Priority__c = 'Critical' OR Priority__c = 'High')
+            WHERE SLA_Breached__c = true
         ];
     }
 }

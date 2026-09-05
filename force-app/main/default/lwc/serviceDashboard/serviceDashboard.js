@@ -71,11 +71,11 @@ export default class ServiceDashboard extends NavigationMixin(LightningElement) 
         getPriorityCounts()
             .then((data) => {
                 this.criticalCount = data['Critical'] || 0;
-                this.slaRisk = (data['Critical'] || 0) + (data['High'] || 0);
             })
             .catch((error) => {
                 console.error('Priority error:', JSON.stringify(error));
             });
+
         getSLARiskCount()
             .then((count) => {
                 this.slaRisk = count;

@@ -114,6 +114,6 @@ private class ServiceRequestControllerTest {
 
         Test.stopTest();
 
-        System.assertEquals(1, count, 'Should count only non-resolved Critical/High priority requests.');
+        System.assertEquals(0, count, 'No records should be SLA breached in default test data.');
     }
 }

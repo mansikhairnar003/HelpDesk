@@ -11,10 +11,15 @@ private class SLARequestBatchTest {
             Priority__c = 'Critical',
             Status__c = 'In Progress',
             Request_Date__c = System.now(),
-            SLA_Deadline__c = System.now().addHours(1)
+            SLA_Deadline__c = System.now().addHours(-1)
         );
 
         insert request;
+
+        // Force correct values after insert (Flow may override Status__c on insert)
+        request.Status__c = 'In Progress';
+        request.SLA_Deadline__c = System.now().addHours(-1);
+        update request;
 
         Test.startTest();
 
@@ -26,32 +31,30 @@ private class SLARequestBatchTest {
         Test.stopTest();
 
         AsyncApexJob job = [
-            SELECT Id,
-                   Status,
-                   JobType,
-                   NumberOfErrors,
-                   JobItemsProcessed,
-                   TotalJobItems
+            SELECT Id, Status, JobType, NumberOfErrors
             FROM AsyncApexJob
             WHERE Id = :batchJobId
         ];
 
+        System.assertEquals('Completed', job.Status, 'Batch should complete successfully.');
+        System.assertEquals(0, job.NumberOfErrors, 'Batch should complete without errors.');
+
+        Service_Request__c updated = [
+            SELECT Status__c, SLA_Breached__c
+            FROM Service_Request__c
+            WHERE Id = :request.Id
+        ];
+
         System.assertEquals(
-            'Completed',
-            job.Status,
-            'Batch should complete successfully.'
+            true,
+            updated.SLA_Breached__c,
+            'SLA_Breached__c should be true when deadline has passed.'
         );
 
         System.assertEquals(
-            'BatchApex',
-            job.JobType,
-            'Job type should be BatchApex.'
-        );
-
-        System.assertEquals(
-            0,
-            job.NumberOfErrors,
-            'Batch should complete without errors.'
+            'In Progress',
+            updated.Status__c,
+            'Status should remain unchanged when SLA breaches.'
         );
     }
 }
