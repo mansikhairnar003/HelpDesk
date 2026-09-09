@@ -116,4 +116,28 @@ private class ServiceRequestControllerTest {
 
         System.assertEquals(0, count, 'No records should be SLA breached in default test data.');
     }
+    @IsTest
+    static void testCreateServiceRequest() {
+
+        Test.startTest();
+
+        Id newId = ServiceRequestController.createServiceRequest(
+            'My mouse is not working',
+            'My mouse is not working',
+            'Hardware',
+            'Medium'
+        );
+
+        Test.stopTest();
+
+        Service_Request__c created = [
+            SELECT Subject__c, Description__c, Category__c, Priority__c
+            FROM Service_Request__c
+            WHERE Id = :newId
+        ];
+
+        System.assertEquals('My mouse is not working', created.Subject__c, 'Subject should match.');
+        System.assertEquals('Hardware', created.Category__c, 'Category should match.');
+        System.assertEquals('Medium', created.Priority__c, 'Priority should match employee selection.');
+    }
 }

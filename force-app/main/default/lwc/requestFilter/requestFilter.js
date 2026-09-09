@@ -27,7 +27,9 @@ export default class RequestFilter extends LightningElement {
         { label: 'Hardware', value: 'Hardware' },
         { label: 'Software', value: 'Software' },
         { label: 'Network', value: 'Network' },
-        { label: 'Access', value: 'Access' }
+        { label: 'Access', value: 'Access' },
+        { label: 'Email', value: 'Email' },
+        { label: 'Other', value: 'Other' }
     ];
 
     handleSearch(event) {

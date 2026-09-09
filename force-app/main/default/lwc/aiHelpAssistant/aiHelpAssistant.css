@@ -1,0 +1,31 @@
+.ai-result-box {
+    background: #f4f6f9;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border-left: 4px solid #0176d3;
+}
+
+.result-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #706e6b;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.result-category {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0176d3;
+}
+
+.result-message {
+    font-size: 0.95rem;
+    color: #16325c;
+}
+
+.review-note {
+    font-size: 0.85rem;
+    color: #706e6b;
+    font-style: italic;
+}

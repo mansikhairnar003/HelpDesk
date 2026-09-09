@@ -86,4 +86,16 @@ public with sharing class ServiceRequestController {
             WHERE SLA_Breached__c = true
         ];
     }
+    @AuraEnabled
+    public static Id createServiceRequest(String subject, String description, String category, String priority) {
+        Service_Request__c newRequest = new Service_Request__c(
+            Subject__c = subject,
+            Description__c = description,
+            Category__c = category,
+            Priority__c = priority
+        );
+
+        insert newRequest;
+        return newRequest.Id;
+    }
 }

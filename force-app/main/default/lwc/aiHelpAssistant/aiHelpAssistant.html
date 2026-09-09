@@ -1,0 +1,126 @@
+<template>
+
+    <lightning-card
+        title="AI Help Assistant"
+        icon-name="utility:einstein">
+
+        <div class="slds-p-around_medium">
+
+            <!-- ========================= -->
+            <!-- ISSUE INPUT SECTION -->
+            <!-- ========================= -->
+
+            <template if:false={hasResult}>
+
+                <lightning-textarea
+                    label="Describe your issue"
+                    placeholder="e.g. My VPN is not working"
+                    value={issueText}
+                    onchange={handleIssueChange}>
+                </lightning-textarea>
+
+                <div class="slds-m-top_medium">
+
+                    <lightning-button
+                        variant="brand"
+                        label="Ask AI Assistant"
+                        onclick={handleAskAI}
+                        disabled={isButtonDisabled}>
+                    </lightning-button>
+
+                </div>
+
+                <template if:true={isLoading}>
+
+                    <div class="slds-m-top_medium">
+
+                        <lightning-spinner
+                            alternative-text="Thinking..."
+                            size="small">
+                        </lightning-spinner>
+
+                    </div>
+
+                </template>
+
+                <template if:true={errorMessage}>
+
+                    <div class="slds-text-color_error slds-m-top_medium">
+
+                        {errorMessage}
+
+                    </div>
+
+                </template>
+
+            </template>
+
+
+            <!-- ========================= -->
+            <!-- AI RESULT SECTION -->
+            <!-- ========================= -->
+
+            <template if:true={hasResult}>
+
+                <div class="ai-result-box slds-m-bottom_medium">
+
+                    <p class="result-label">
+                        AI Suggestion
+                    </p>
+
+                    <p class="result-message">
+                        {aiResult.responseMessage}
+                    </p>
+
+                </div>
+
+
+                <p class="review-note slds-m-bottom_medium">
+
+                    AI has analyzed your issue. Click
+                    <strong> Create Service Request </strong>
+                    to open a new Service Request with the suggested
+                    information pre-filled.
+
+                </p>
+
+
+                <!-- AI suggested category -->
+
+                <lightning-input
+                    label="Suggested Category"
+                    value={formCategory}
+                    disabled>
+                </lightning-input>
+
+
+                <!-- ========================= -->
+                <!-- ACTION BUTTONS -->
+                <!-- ========================= -->
+
+                <div class="slds-m-top_large">
+
+                    <lightning-button
+                        variant="brand"
+                        label="Create Service Request"
+                        onclick={handleCreateRequest}
+                        disabled={isCreateRequestDisabled}
+                        class="slds-m-right_small">
+                    </lightning-button>
+
+
+                    <lightning-button
+                        variant="neutral"
+                        label="Start Over"
+                        onclick={handleStartOver}>
+                    </lightning-button>
+
+                </div>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+</template>
