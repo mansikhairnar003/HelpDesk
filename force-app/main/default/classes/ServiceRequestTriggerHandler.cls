@@ -7,7 +7,9 @@ public with sharing class ServiceRequestTriggerHandler {
         Set<String> categoryNames = new Set<String>();
 
         for (Service_Request__c request : newRequests) {
-            if (request.Category__c != null) {
+            if (request.Category__c != null &&
+                request.Priority__c == null) {
+
                 categoryNames.add(request.Category__c);
             }
         }
@@ -16,7 +18,9 @@ public with sharing class ServiceRequestTriggerHandler {
             return;
         }
 
-        Map<String, Service_Category__c> categoryByName = new Map<String, Service_Category__c>();
+        Map<String, Service_Category__c> categoryByName =
+            new Map<String, Service_Category__c>();
+
         for (Service_Category__c cat : [
             SELECT Name, Default_Priority__c
             FROM Service_Category__c
@@ -26,10 +30,14 @@ public with sharing class ServiceRequestTriggerHandler {
         }
 
         for (Service_Request__c request : newRequests) {
+
             if (request.Category__c != null &&
+                request.Priority__c == null &&
                 categoryByName.containsKey(request.Category__c)) {
 
-                Service_Category__c cat = categoryByName.get(request.Category__c);
+                Service_Category__c cat =
+                    categoryByName.get(request.Category__c);
+
                 if (cat.Default_Priority__c != null) {
                     request.Priority__c = cat.Default_Priority__c;
                 }
