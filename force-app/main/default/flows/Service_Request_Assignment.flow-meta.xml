@@ -8,17 +8,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Assigned_To__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>$Record.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Assigned</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IT_Support_Queue.Id</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -28,17 +28,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Assigned_To__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>$Record.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Assigned</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IT_Support_Queue.Id</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -48,17 +48,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Assigned_To__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>$Record.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Assigned</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IT_Support_Queue.Id</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -68,17 +68,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Assigned_To__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>$Record.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Assigned</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IT_Support_Queue.Id</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -88,17 +88,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Assigned_To__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>$Record.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Assigned</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IT_Support_Queue.Id</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -108,20 +108,27 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Assigned_To__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>$Record.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Assigned</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IT_Support_Queue.Id</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
+    <constants>
+        <name>QueueName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>IT Support Queue</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Determine_Support_Team</name>
         <label>Determine Support Team</label>
@@ -229,11 +236,39 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>IT_Support_Queue</name>
+        <label>IT_Support_Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Determine_Support_Team</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>QueueName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Determine_Support_Team</targetReference>
+            <targetReference>IT_Support_Queue</targetReference>
         </connector>
         <object>Service_Request__c</object>
         <recordTriggerType>Create</recordTriggerType>
