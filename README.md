@@ -256,7 +256,6 @@ SLA Breach Monitoring
 | Testing                 | Apex Test Classes, `HttpCalloutMock`       |
 | Reporting               | Salesforce Reports & Dashboards            |
 | Version Control         | Git, GitHub                                |
-| Project Tracking        | Jira                                       |
 
 ---
 
@@ -407,14 +406,6 @@ Batch and Scheduled Apex are used for periodic SLA breach evaluation instead of 
 - **Support routing:** Requests currently use a shared IT Support Queue. Future routing could use dedicated queues for different support categories.
 - **IT Asset lifecycle:** Asset assignment and checkout/return automation is outside the current project scope.
 - **AI integration:** The current AI workflow sends the employee's issue description to an external service. Production deployment would require appropriate privacy and data-governance controls.
-
----
-
-## Development & Project Tracking
-
-Jira was used to create user stories and track implementation progress during development.
-
-As an individual portfolio project, the work followed an **Agile-style task workflow** rather than a formal Scrum process with dedicated Scrum ceremonies.
 
 ---
 
