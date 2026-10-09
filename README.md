@@ -248,7 +248,7 @@ SLA Breach Monitoring
 | Platform                | Salesforce                                 |
 | Automation              | Salesforce Flow                            |
 | Backend                 | Apex, Trigger, Trigger Handler             |
-| Asynchronous Processing | Batch Apex, Scheduled Apex, Queueable Apex |
+| Asynchronous Processing | Batch Apex, Scheduled Apex |
 | Frontend                | Lightning Web Components                   |
 | Component Communication | Lightning Message Service                  |
 | Integration             | REST API                                   |
@@ -406,6 +406,8 @@ Batch and Scheduled Apex are used for periodic SLA breach evaluation instead of 
 - **Support routing:** Requests currently use a shared IT Support Queue. Future routing could use dedicated queues for different support categories.
 - **IT Asset lifecycle:** Asset assignment and checkout/return automation is outside the current project scope.
 - **AI integration:** The current AI workflow sends the employee's issue description to an external service. Production deployment would require appropriate privacy and data-governance controls.
+- **Apex security:** queries use `with sharing` but do not enforce field-level security (`WITH USER_MODE`); permission sets do not grant explicit Apex class access to non-admin users.
+- **Data volume:** `getAllRequests` has no LIMIT/pagination and filtering is client-side.
 
 ---
 
@@ -438,10 +440,7 @@ HelpDesk/
 │       ├── lwc/
 │       ├── messageChannels/
 │       ├── objects/
-│       ├── permissionsets/
-│       ├── reports/
-│       ├── dashboards/
-│       └── customMetadata/
+│       └── permissionsets/
 │
 ├── docs/
 │   └── screenshots/
